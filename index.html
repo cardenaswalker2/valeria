@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Súper Academia de Aprendizaje</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #00cec9;
+            --accent: #ff7675;
+            --bg: #f0f2f8;
+            --white: #ffffff;
+            --text: #2d3436;
+            --card-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg);
+            background-image: radial-gradient(#dcdde1 1px, transparent 1px);
+            background-size: 30px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .main-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 1000px;
+            min-height: 700px;
+            border-radius: 30px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 4px solid #fff;
+        }
+
+        .top-bar {
+            background: var(--white);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #f1f2f6;
+        }
+
+        .subject-tag {
+            background: var(--accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .screen {
+            padding: 40px;
+            flex-grow: 1;
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .active { display: flex; flex-direction: column; }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .menu-card {
+            background: white;
+            border: 3px solid #f1f2f6;
+            border-radius: 25px;
+            padding: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.1);
+        }
+
+        .reading-area {
+            background: #fffcf0;
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border-left: 10px solid #fdcb6e;
+            line-height: 1.9;
+            font-size: 1.2rem;
+            color: #2d3436;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
+            white-space: pre-line;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .option-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 2px solid #eee;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .option-box:hover { background: #f0f0f0; }
+        .option-box.selected {
+            background: #6c5ce722;
+            border-color: var(--primary);
+            font-weight: bold;
+        }
+
+        .footer-nav {
+            margin-top: 30px;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid #f1f2f6;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .btn-next { background: var(--primary); color: white; }
+        .btn-next:disabled { background: #ccc; }
+
+        .progress-wrapper { width: 300px; height: 12px; background: #eee; border-radius: 10px; }
+        .progress-bar { height: 100%; background: var(--secondary); width: 0%; border-radius: 10px; transition: 0.3s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .result-screen { text-align: center; justify-content: center; }
+        .score-circle {
+            width: 180px; height: 180px; background: var(--primary);
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; color: white; font-size: 50px; font-weight: 800;
+            margin: 0 auto 30px; border: 8px solid #a29bfe;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    <div class="top-bar">
+        <h1 style="color: var(--primary);">🌟 Academia de Éxito</h1>
+        <div id="status-area" style="display: none; align-items: center; gap: 20px;">
+            <div class="progress-wrapper"><div class="progress-bar" id="progress-bar"></div></div>
+            <span id="counter-text" style="font-weight: bold;"></span>
+        </div>
+        <div id="subject-label" class="subject-tag" style="display: none;"></div>
+    </div>
+
+    <!-- INICIO -->
+    <div id="screen-welcome" class="screen active">
+        <div style="text-align:center;">
+            <h2 style="font-size: 40px; color: #2d3436;">¡Hola! ¿Lista para aprender?</h2>
+            <p style="font-size: 20px; color: #636e72;">Hoy vamos a leer mucho y a pensar como expertos.</p>
+        </div>
+        
+        <div class="menu-grid">
+            <div class="menu-card" onclick="initQuiz('castellano')">
+                <div style="font-size: 60px;">📚</div>
+                <h2>Castellano</h2>
+                <p>Lecturas divertidas y gramática.</p>
+            </div>
+            <div class="menu-card" onclick="initQuiz('matematicas')">
+                <div style="font-size: 60px;">🔢</div>
+                <h2>Matemáticas</h2>
+                <p>Retos lógicos y números.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUESTIONARIO -->
+    <div id="screen-quiz" class="screen">
+        <div id="reading-content" class="reading-area"></div>
+        <div class="question-text" id="question-text"></div>
+        <div class="options-container" id="options-container"></div>
+        
+        <div class="footer-nav">
+            <button class="btn" style="background: #fab1a0;" onclick="location.reload()">Salir</button>
+            <button class="btn btn-next" id="btn-next" onclick="handleNext()" disabled>Siguiente Paso ➔</button>
+        </div>
+    </div>
+
+    <!-- RESULTADOS -->
+    <div id="screen-results" class="screen result-screen">
+        <h2 style="font-size: 35px; margin-bottom: 20px;">¡Examen Terminado!</h2>
+        <div class="score-circle" id="score-circle">0/10</div>
+        <p id="result-feedback" style="font-size: 22px; margin-bottom: 40px;"></p>
+        <button class="btn btn-next" onclick="location.reload()">¡Quiero otro reto!</button>
+    </div>
+</div>
+
+<script>
+    const castellanoQuestions = [
+        {
+            text: "El Misterio de la Selva Esmeralda\n\nEn lo más profundo de la selva, donde el sol apenas toca el suelo, vivía un pequeño mono llamado Tito. A diferencia de sus hermanos, a Tito no le interesaba solo saltar entre las ramas; él quería entender por qué las flores de la selva brillaban en la oscuridad. Una noche, Tito siguió un rastro de luz azul que lo llevó hasta una cueva escondida detrás de una cascada. Allí descubrió que las flores no brillaban por magia, sino porque unos diminutos insectos llamados 'Luceros' vivían dentro de ellas y las iluminaban para guiarse en la noche. Tito comprendió que en la naturaleza, todo tiene una explicación si observamos con cuidado.",
+            question: "¿Por qué brillaban las flores en la oscuridad según el descubrimiento de Tito?",
+            options: ["Porque tenían una magia especial.", "Porque unos insectos llamados Luceros vivían en ellas.", "Porque la luz del sol se quedaba guardada.", "Porque Tito las pintaba cada noche."],
+            answer: 1
+        },
+        {
+            text: "Continuando con Tito...\n\nDespués de ver a los Luceros, Tito regresó con su familia para contarles lo sucedido. Al principio, nadie le creía. Su abuelo, el mono más sabio, le dijo: 'Para creer en algo nuevo, necesitamos pruebas, Tito'. Entonces, Tito llevó a su abuelo a la cascada y le mostró el brillo azul. El abuelo sonrió y le dijo que su curiosidad era un tesoro. Desde ese día, Tito fue nombrado el Explorador Oficial de la Selva, y aprendió que la paciencia es necesaria para demostrar la verdad.",
+            question: "¿Qué lección le dio el abuelo a Tito sobre las cosas nuevas?",
+            options: ["Que no debe hablar con desconocidos.", "Que para creer en algo nuevo se necesitan pruebas.", "Que los monos no deben entrar en cuevas.", "Que las flores son peligrosas."],
+            answer: 1
+        },
+        {
+            text: "Los Delfines: Inteligencia bajo el agua\n\nLos delfines son animales fascinantes. Aunque viven en el agua, no son peces, sino mamíferos. Esto significa que respiran aire a través de un orificio en la parte superior de su cabeza llamado espiráculo. Los delfines son muy sociables y se comunican entre ellos mediante silbidos y sonidos específicos. Además, utilizan un sistema llamado 'ecolocalización' para encontrar comida y nadar sin chocar, lanzando sonidos que rebotan en los objetos como si fuera un radar.",
+            question: "¿A través de qué órgano respiran los delfines?",
+            options: ["A través de branquias.", "Usando su nariz bajo el agua.", "A través del espiráculo.", "Usando sus aletas."],
+            answer: 2
+        },
+        {
+            text: "Las Abejas y su gran trabajo\n\nLas abejas son fundamentales para la vida en la Tierra. Mientras vuelan de flor en flor buscando néctar para fabricar miel, sus cuerpos se llenan de polen. Al viajar a otra flor, dejan caer ese polen, permitiendo que las plantas produzcan semillas y frutos. Este proceso se llama polinización. Sin las abejas, muchas de las frutas y verduras que comemos hoy, como las manzanas o las fresas, desaparecerían para siempre.",
+            question: "¿Cómo se llama el proceso en el que las abejas ayudan a las plantas a producir frutos?",
+            options: ["Fabricación de miel.", "Fotosíntesis.", "Polinización.", "Recolección."],
+            answer: 2
+        },
+        {
+            text: "El Ciclo del Agua\n\nEl agua de nuestro planeta está en constante movimiento. El calor del sol evapora el agua de los mares y ríos, convirtiéndola en vapor que sube al cielo para formar las nubes. Cuando las nubes se enfrían, el agua cae en forma de lluvia o nieve. Este ciclo es vital porque distribuye el agua dulce por todo el mundo, permitiendo que los animales y las plantas puedan beber y crecer.",
+            question: "¿Qué sucede cuando el agua de las nubes se enfría?",
+            options: ["Se convierte en nubes más grandes.", "Cae en forma de lluvia o nieve.", "Desaparece por el calor.", "Se convierte en vapor de agua."],
+            answer: 1
+        },
+        {
+            text: null,
+            question: "En la oración: 'La mariposa azul vuela alegremente sobre el jardín', ¿cuál es el sustantivo?",
+            options: ["Azul", "Vuela", "Mariposa", "Alegremente"],
+            answer: 2
+        },
+        {
+            text: null,
+            question: "¿Cuál de las siguientes palabras es un sinónimo de 'Valiente'?",
+            options: ["Miedoso", "Osado", "Triste", "Rápido"],
+            answer: 1
+        },
+        {
+            text: null,
+            question: "Identifica la palabra que está escrita incorrectamente:",
+            options: ["Zapato", "Hervir", "Bivía", "Gente"],
+            answer: 2 // Bivía (es Vivía)
+        },
+        {
+            text: null,
+            question: "¿Qué tipo de palabra es 'Caminar'?",
+            options: ["Sustantivo", "Adjetivo", "Verbo", "Pronombre"],
+            answer: 2
+        },
+        {
+            text: null,
+            question: "En una biblioteca, los libros se ordenan alfabéticamente. ¿Qué palabra iría primero?",
+            options: ["Avión", "Abeja", "Árbol", "Arena"],
+            answer: 1 // Abeja va antes que Abeja? No. Ab, Ar, Av... Abeja es la primera.
+        }
+    ];
+
+    const matematicasQuestions = [
+        {
+            text: "La Pastelería de Doña Rosa\n\nDoña Rosa horneó 8 bandejas llenas de galletas de chocolate para la feria del colegio. Cada bandeja tiene exactamente 12 galletas. Antes de llevarlas a la feria, su nieto se comió 6 galletas porque olían muy bien. Doña Rosa necesita saber cuántas galletas le quedan para vender.",
+            question: "¿Cuántas galletas tiene Doña Rosa ahora para vender?",
+            options: ["96 galletas", "80 galletas", "90 galletas", "100 galletas"],
+            answer: 2 // (8 * 12) - 6 = 90
+        },
+        {
+            text: "El Gran Ahorro de Camilo\n\nCamilo quiere comprar una bicicleta que cuesta $250. Él ya tiene guardados $120 en su alcancía. Para completar el dinero, su papá le propuso darle $10 por cada semana que ayude a limpiar el jardín. Camilo quiere saber cuántas semanas tendrá que trabajar para alcanzar su meta.",
+            question: "¿Cuántas semanas debe trabajar Camilo para comprar su bicicleta?",
+            options: ["10 semanas", "15 semanas", "13 semanas", "20 semanas"],
+            answer: 2 // (250 - 120) / 10 = 13
+        },
+        {
+            text: "La Biblioteca Escolar\n\nEn la biblioteca de la escuela llegaron 4 cajas grandes con libros nuevos. En cada caja hay 25 libros de cuentos y 15 libros de ciencias. La bibliotecaria quiere poner todos los libros en un estante nuevo que tiene 5 repisas, poniendo la misma cantidad de libros en cada una.",
+            question: "¿Cuántos libros pondrá la bibliotecaria en cada repisa?",
+            options: ["32 libros", "40 libros", "20 libros", "30 libros"],
+            answer: 0 // 4 * (25+15) = 160. 160 / 5 = 32
+        },
+        {
+            text: "El Viaje en Autobús\n\nUn autobús sale de la ciudad con 45 pasajeros. En la primera parada bajan 12 personas y suben 8. En la segunda parada bajan 15 personas y suben 10. Los niños que van en el autobús se preguntan cuántas personas llegarán finalmente al destino.",
+            question: "¿Con cuántos pasajeros termina el viaje el autobús?",
+            options: ["36 pasajeros", "40 pasajeros", "30 pasajeros", "28 pasajeros"],
+            answer: 0 // 45 - 12 + 8 - 15 + 10 = 36
+        },
+        {
+            text: "Construyendo un Huerto\n\nEl profesor de cuarto grado quiere hacer un huerto rectangular. El huerto medirá 8 metros de largo y 5 metros de ancho. Para que los animales no entren, deben rodear todo el borde con una cerca de alambre.",
+            question: "¿Cuántos metros de cerca necesitan comprar en total (perímetro)?",
+            options: ["13 metros", "40 metros", "26 metros", "30 metros"],
+            answer: 2 // (8*2) + (5*2) = 26
+        },
+        {
+            text: "La Colección de Canicas\n\nAndrés tiene una colección de 120 canicas. Decide repartirlas equitativamente entre sus 4 mejores amigos. Sin embargo, antes de dárselas, encuentra 8 canicas más en su mochila y decide quedárselas para él.",
+            question: "¿Cuántas canicas recibirá cada uno de sus 4 amigos?",
+            options: ["30 canicas", "32 canicas", "25 canicas", "40 canicas"],
+            answer: 0 // 120 / 4 = 30
+        },
+        {
+            text: "Fiesta de Cumpleaños\n\nPara el cumpleaños de Sofía, compraron 5 paquetes de refrescos. Cada paquete tiene 6 botellas. Si en la fiesta hay 15 invitados y todos beben la misma cantidad de refresco hasta que se acaban las botellas...",
+            question: "¿Cuántas botellas de refresco se tomó cada invitado?",
+            options: ["1 botella", "3 botellas", "2 botellas", "5 botellas"],
+            answer: 2 // (5 * 6) / 15 = 2
+        },
+        {
+            text: "El Entrenamiento de Atletismo\n\nMariana corre 400 metros cada día de lunes a viernes. Los sábados, como tiene más tiempo, corre el doble de lo que corre un día normal. Los domingos descansa.",
+            question: "¿Cuántos metros corre Mariana en total durante toda la semana?",
+            options: ["2000 metros", "2400 metros", "2800 metros", "3000 metros"],
+            answer: 2 // (400 * 5) + 800 = 2800
+        },
+        {
+            text: "Reparto de Pizza\n\nSe compraron 3 pizzas para una cena familiar. Cada pizza está cortada en 8 rebanadas iguales. Si al final de la noche sobraron solo 4 rebanadas...",
+            question: "¿Cuántas rebanadas se comieron en total?",
+            options: ["20 rebanadas", "24 rebanadas", "18 rebanadas", "22 rebanadas"],
+            answer: 0 // (3 * 8) - 4 = 20
+        },
+        {
+            text: "Ahorro para el Cine\n\nUna entrada al cine cuesta $45 y un combo de palomitas cuesta $30. Si Lucía lleva un billete de $100 para pagar su entrada y sus palomitas...",
+            question: "¿Cuánto dinero recibirá Lucía de cambio?",
+            options: ["$35", "$25", "$15", "$30"],
+            answer: 1 // 100 - (45 + 30) = 25
+        }
+    ];
+
+    let currentQuestions = [];
+    let currentIdx = 0;
+    let score = 0;
+    let selectedIdx = null;
+
+    function initQuiz(subject) {
+        document.getElementById('screen-welcome').classList.remove('active');
+        document.getElementById('screen-quiz').classList.add('active');
+        document.getElementById('status-area').style.display = 'flex';
+        document.getElementById('subject-label').style.display = 'block';
+        
+        currentIdx = 0;
+        score = 0;
+
+        if(subject === 'castellano') {
+            currentQuestions = [...castellanoQuestions];
+            document.getElementById('subject-label').innerText = "Castellano";
+            document.getElementById('subject-label').style.background = "#6c5ce7";
+        } else {
+            currentQuestions = [...matematicasQuestions];
+            document.getElementById('subject-label').innerText = "Matemáticas";
+            document.getElementById('subject-label').style.background = "#00cec9";
+        }
+        
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const q = currentQuestions[currentIdx];
+        selectedIdx = null;
+        document.getElementById('btn-next').disabled = true;
+
+        const progress = (currentIdx / currentQuestions.length) * 100;
+        document.getElementById('progress-bar').style.width = progress + "%";
+        document.getElementById('counter-text').innerText = `${currentIdx + 1} / ${currentQuestions.length}`;
+
+        const readingDiv = document.getElementById('reading-content');
+        if(q.text) {
+            readingDiv.style.display = "block";
+            readingDiv.innerText = q.text;
+        } else {
+            readingDiv.style.display = "none";
+        }
+
+        document.getElementById('question-text').innerText = q.question;
+        
+        const optionsDiv = document.getElementById('options-container');
+        optionsDiv.innerHTML = "";
+        
+        q.options.forEach((opt, i) => {
+            const div = document.createElement('div');
+            div.className = 'option-box';
+            div.innerHTML = `<span style="font-weight:bold; color:var(--primary); margin-right:10px;">${String.fromCharCode(65+i)})</span> ${opt}`;
+            div.onclick = () => {
+                const all = document.querySelectorAll('.option-box');
+                all.forEach(box => box.classList.remove('selected'));
+                div.classList.add('selected');
+                selectedIdx = i;
+                document.getElementById('btn-next').disabled = false;
+            };
+            optionsDiv.appendChild(div);
+        });
+    }
+
+    function handleNext() {
+        if(selectedIdx === currentQuestions[currentIdx].answer) {
+            score++;
+        }
+
+        currentIdx++;
+        if(currentIdx < currentQuestions.length) {
+            showQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        document.getElementById('screen-quiz').classList.remove('active');
+        document.getElementById('screen-results').classList.add('active');
+        document.getElementById('progress-bar').style.width = "100%";
+        
+        const circle = document.getElementById('score-circle');
+        circle.innerText = `${score} / ${currentQuestions.length}`;
+        
+        const feedback = document.getElementById('result-feedback');
+        if(score >= 9) {
+            feedback.innerHTML = "¡ERES UNA GENIO! 🏆<br>Has leído y resuelto todo perfectamente. ¡Sigue así, llegarás muy lejos!";
+        } else if (score >= 7) {
+            feedback.innerHTML = "¡Excelente trabajo! 🌟<br>Casi logras el puntaje perfecto. Lee con un poquito más de calma la próxima.";
+        } else if (score >= 5) {
+            feedback.innerHTML = "¡Buen esfuerzo! 👍<br>Has aprobado, pero puedes mejorar si sigues practicando tu lectura diaria.";
+        } else {
+            feedback.innerHTML = "¡No te rindas! 💪<br>A veces la lectura es difícil, pero si lo intentas de nuevo seguro que mejorarás.";
+        }
+    }
+</script>
+
+</body>
+</html> 
