@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Súper Academia de Aprendizaje</title>
+    <title>Mejorando Nuestra Convivencia - Nedis y Felipe</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6c5ce7;
-            --secondary: #00cec9;
-            --accent: #ff7675;
-            --bg: #f0f2f8;
+            /* Colores más cálidos y de hogar */
+            --primary: #e17055; /* Terracota suave */
+            --secondary: #00b894; /* Verde esperanza */
+            --accent: #6c5ce7; /* Morado reflexivo */
+            --bg: #f5f6fa;
             --white: #ffffff;
             --text: #2d3436;
             --card-shadow: 0 15px 35px rgba(0,0,0,0.1);
@@ -21,7 +22,8 @@
         body {
             font-family: 'Quicksand', sans-serif;
             background-color: var(--bg);
-            background-image: radial-gradient(#dcdde1 1px, transparent 1px);
+            /* Patrón de corazones sutiles o puntos */
+            background-image: radial-gradient(#bdc3c7 1px, transparent 1px);
             background-size: 30px 30px;
             display: flex;
             justify-content: center;
@@ -33,8 +35,8 @@
         .main-card {
             background: var(--white);
             width: 100%;
-            max-width: 1000px;
-            min-height: 700px;
+            max-width: 900px;
+            min-height: 750px;
             border-radius: 30px;
             box-shadow: var(--card-shadow);
             overflow: hidden;
@@ -45,11 +47,20 @@
 
         .top-bar {
             background: var(--white);
-            padding: 20px 40px;
+            padding: 25px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #f1f2f6;
+        }
+
+        .title-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .subject-tag {
@@ -59,88 +70,104 @@
             border-radius: 20px;
             font-weight: bold;
             font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .screen {
             padding: 40px;
             flex-grow: 1;
             display: none;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.5s ease;
         }
 
         .active { display: flex; flex-direction: column; }
 
+        .intro-text {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
         .menu-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
             gap: 30px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         .menu-card {
             background: white;
             border: 3px solid #f1f2f6;
             border-radius: 25px;
-            padding: 40px;
+            padding: 40px 20px;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .menu-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.1);
+            box-shadow: 0 10px 25px rgba(225, 112, 85, 0.2);
         }
 
+        .menu-icon { font-size: 70px; margin-bottom: 15px; }
+
+        /* Área de lectura de la situación */
         .reading-area {
-            background: #fffcf0;
-            padding: 35px;
+            background: #fff8f0; /* Fondo crema muy suave */
+            padding: 30px;
             border-radius: 20px;
             margin-bottom: 25px;
-            border-left: 10px solid #fdcb6e;
-            line-height: 1.9;
-            font-size: 1.2rem;
-            color: #2d3436;
-            max-height: 400px;
-            overflow-y: auto;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
-            white-space: pre-line;
+            border-left: 8px solid var(--primary);
+            line-height: 1.8;
+            font-size: 1.15rem;
+            color: #4a4a4a;
+            white-space: pre-line; /* Respeta saltos de línea */
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
         }
 
         .question-text {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: var(--primary);
+            color: #2d3436;
             margin-bottom: 25px;
         }
 
         .options-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr; /* Una columna para leer mejor las respuestas largas */
             gap: 15px;
         }
 
         .option-box {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 18px 25px;
             border-radius: 15px;
             cursor: pointer;
             border: 2px solid #eee;
             transition: 0.2s;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
         }
 
-        .option-box:hover { background: #f0f0f0; }
+        .option-box:hover { background: #f1f2f6; border-color: #bdc3c7; }
+        
         .option-box.selected {
-            background: #6c5ce722;
+            background: #e1705522; /* Tinted primary */
             border-color: var(--primary);
-            font-weight: bold;
+            color: var(--primary);
+            font-weight: 600;
         }
 
         .footer-nav {
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: auto;
+            padding-top: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -154,22 +181,42 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 1rem;
+            font-family: 'Quicksand', sans-serif;
+            transition: transform 0.2s;
         }
 
+        .btn:active { transform: scale(0.98); }
+
+        .btn-exit { background: #dfe6e9; color: #636e72; }
         .btn-next { background: var(--primary); color: white; }
-        .btn-next:disabled { background: #ccc; }
+        .btn-next:disabled { background: #ccc; cursor: not-allowed; transform: none; }
 
-        .progress-wrapper { width: 300px; height: 12px; background: #eee; border-radius: 10px; }
-        .progress-bar { height: 100%; background: var(--secondary); width: 0%; border-radius: 10px; transition: 0.3s; }
+        .progress-wrapper { width: 200px; height: 10px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--secondary); width: 0%; transition: width 0.4s ease; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .result-screen { text-align: center; justify-content: center; }
+        .result-screen { text-align: center; justify-content: center; align-items: center; }
+        
         .score-circle {
-            width: 180px; height: 180px; background: var(--primary);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; color: white; font-size: 50px; font-weight: 800;
-            margin: 0 auto 30px; border: 8px solid #a29bfe;
+            width: 150px; height: 150px; 
+            background: var(--secondary);
+            border-radius: 50%; 
+            display: flex; align-items: center;
+            justify-content: center; 
+            color: white; 
+            font-size: 40px; 
+            font-weight: 800;
+            margin: 0 auto 30px; 
+            box-shadow: 0 10px 20px rgba(0,184,148,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .menu-grid { grid-template-columns: 1fr; }
+            .top-bar { padding: 15px; }
+            .reading-area { font-size: 1rem; padding: 20px; }
+            .main-card { border-radius: 0; min-height: 100vh; }
         }
     </style>
 </head>
@@ -177,180 +224,299 @@
 
 <div class="main-card">
     <div class="top-bar">
-        <h1 style="color: var(--primary);">🌟 Academia de Éxito</h1>
-        <div id="status-area" style="display: none; align-items: center; gap: 20px;">
+        <div class="title-logo">
+            <span>❤️</span> Hogar en Armonía
+        </div>
+        <div id="status-area" style="display: none; align-items: center; gap: 15px;">
             <div class="progress-wrapper"><div class="progress-bar" id="progress-bar"></div></div>
-            <span id="counter-text" style="font-weight: bold;"></span>
+            <span id="counter-text" style="font-weight: bold; color: #aaa;"></span>
         </div>
         <div id="subject-label" class="subject-tag" style="display: none;"></div>
     </div>
 
-    <!-- INICIO -->
+    <!-- PANTALLA DE INICIO -->
     <div id="screen-welcome" class="screen active">
-        <div style="text-align:center;">
-            <h2 style="font-size: 40px; color: #2d3436;">¡Hola! ¿Lista para aprender?</h2>
-            <p style="font-size: 20px; color: #636e72;">Hoy vamos a leer mucho y a pensar como expertos.</p>
+        <div class="intro-text">
+            <h2 style="font-size: 32px; color: #2d3436; margin-bottom: 10px;">¡Bienvenidos Nedis y Felipe!</h2>
+            <p style="font-size: 18px; color: #636e72;">
+                La convivencia es un reto diario. A veces nos equivocamos, pero siempre podemos mejorar.<br>
+                Selecciona quién va a responder las preguntas hoy.
+            </p>
         </div>
         
         <div class="menu-grid">
-            <div class="menu-card" onclick="initQuiz('castellano')">
-                <div style="font-size: 60px;">📚</div>
-                <h2>Castellano</h2>
-                <p>Lecturas divertidas y gramática.</p>
+            <!-- Tarjeta NEDIS -->
+            <div class="menu-card" onclick="initQuiz('nedis')">
+                <div class="menu-icon">👩🏽</div>
+                <h2 style="color: #d63031;">Soy Nedis</h2>
+                <p>Preguntas sobre paciencia, escucha y calma.</p>
             </div>
-            <div class="menu-card" onclick="initQuiz('matematicas')">
-                <div style="font-size: 60px;">🔢</div>
-                <h2>Matemáticas</h2>
-                <p>Retos lógicos y números.</p>
+            
+            <!-- Tarjeta FELIPE -->
+            <div class="menu-card" onclick="initQuiz('felipe')">
+                <div class="menu-icon">👨🏽</div>
+                <h2 style="color: #0984e3;">Soy Felipe</h2>
+                <p>Preguntas sobre empatía, detalles y apoyo.</p>
             </div>
         </div>
     </div>
 
-    <!-- CUESTIONARIO -->
+    <!-- PANTALLA DEL QUIZ -->
     <div id="screen-quiz" class="screen">
+        <!-- Texto de situación -->
         <div id="reading-content" class="reading-area"></div>
+        
+        <!-- Pregunta -->
         <div class="question-text" id="question-text"></div>
+        
+        <!-- Opciones -->
         <div class="options-container" id="options-container"></div>
         
         <div class="footer-nav">
-            <button class="btn" style="background: #fab1a0;" onclick="location.reload()">Salir</button>
-            <button class="btn btn-next" id="btn-next" onclick="handleNext()" disabled>Siguiente Paso ➔</button>
+            <button class="btn btn-exit" onclick="location.reload()">Salir</button>
+            <button class="btn btn-next" id="btn-next" onclick="handleNext()" disabled>Siguiente Situación ➔</button>
         </div>
     </div>
 
-    <!-- RESULTADOS -->
+    <!-- PANTALLA DE RESULTADOS -->
     <div id="screen-results" class="screen result-screen">
-        <h2 style="font-size: 35px; margin-bottom: 20px;">¡Examen Terminado!</h2>
+        <h2 style="font-size: 30px; margin-bottom: 20px;">Análisis de Convivencia</h2>
         <div class="score-circle" id="score-circle">0/10</div>
-        <p id="result-feedback" style="font-size: 22px; margin-bottom: 40px;"></p>
-        <button class="btn btn-next" onclick="location.reload()">¡Quiero otro reto!</button>
+        <div id="result-feedback" style="font-size: 20px; max-width: 600px; line-height: 1.6; margin-bottom: 30px;"></div>
+        <button class="btn btn-next" onclick="location.reload()">Volver al Inicio</button>
     </div>
 </div>
 
 <script>
-    const castellanoQuestions = [
+    // ==========================================
+    // PREGUNTAS PARA NEDIS (MADRE)
+    // ==========================================
+    const nedisQuestions = [
         {
-            text: "El Misterio de la Selva Esmeralda\n\nEn lo más profundo de la selva, donde el sol apenas toca el suelo, vivía un pequeño mono llamado Tito. A diferencia de sus hermanos, a Tito no le interesaba solo saltar entre las ramas; él quería entender por qué las flores de la selva brillaban en la oscuridad. Una noche, Tito siguió un rastro de luz azul que lo llevó hasta una cueva escondida detrás de una cascada. Allí descubrió que las flores no brillaban por magia, sino porque unos diminutos insectos llamados 'Luceros' vivían dentro de ellas y las iluminaban para guiarse en la noche. Tito comprendió que en la naturaleza, todo tiene una explicación si observamos con cuidado.",
-            question: "¿Por qué brillaban las flores en la oscuridad según el descubrimiento de Tito?",
-            options: ["Porque tenían una magia especial.", "Porque unos insectos llamados Luceros vivían en ellas.", "Porque la luz del sol se quedaba guardada.", "Porque Tito las pintaba cada noche."],
-            answer: 1
+            text: "Situación: Felipe llega del trabajo. Se le ve cansado, con mala cara y apenas saluda al entrar. Tú has tenido un día pesado con los niños y las cosas de la casa, y tienes muchas ganas de contarle un problema que tuviste.",
+            question: "¿Qué es lo más inteligente que puedes hacer para mantener la paz?",
+            options: [
+                "Reclamarle inmediatamente: '¿Por qué tienes esa cara? Yo también estoy cansada'.",
+                "Ignorarlo y hacer ruido en la cocina para que note que estás molesta.",
+                "Darle 15 minutos de espacio para que se 'desconecte' del trabajo, y luego preguntarle con calma cómo está.",
+                "Llamar a una amiga a quejarte de que Felipe siempre llega amargado."
+            ],
+            answer: 2 // Darle espacio
         },
         {
-            text: "Continuando con Tito...\n\nDespués de ver a los Luceros, Tito regresó con su familia para contarles lo sucedido. Al principio, nadie le creía. Su abuelo, el mono más sabio, le dijo: 'Para creer en algo nuevo, necesitamos pruebas, Tito'. Entonces, Tito llevó a su abuelo a la cascada y le mostró el brillo azul. El abuelo sonrió y le dijo que su curiosidad era un tesoro. Desde ese día, Tito fue nombrado el Explorador Oficial de la Selva, y aprendió que la paciencia es necesaria para demostrar la verdad.",
-            question: "¿Qué lección le dio el abuelo a Tito sobre las cosas nuevas?",
-            options: ["Que no debe hablar con desconocidos.", "Que para creer en algo nuevo se necesitan pruebas.", "Que los monos no deben entrar en cuevas.", "Que las flores son peligrosas."],
-            answer: 1
+            text: "Situación: Felipe prometió arreglar una lámpara el sábado. Llegó el domingo por la noche y la lámpara sigue dañada. Sientes que él no valora tus peticiones.",
+            question: "¿Cómo abordas el reclamo sin iniciar una pelea a gritos?",
+            options: [
+                "Le dices: 'Amor, noté que no pudiste arreglar la lámpara. ¿Podemos poner una fecha fija para hacerlo? La necesito'.",
+                "Le gritas: '¡Eres un mentiroso! Nunca cumples lo que prometes, todo me toca hacerlo a mí'.",
+                "Rompes la lámpara 'sin querer' para que tenga que comprar otra.",
+                "No le hablas en todo el día lunes para castigarlo."
+            ],
+            answer: 0 // Comunicación asertiva
         },
         {
-            text: "Los Delfines: Inteligencia bajo el agua\n\nLos delfines son animales fascinantes. Aunque viven en el agua, no son peces, sino mamíferos. Esto significa que respiran aire a través de un orificio en la parte superior de su cabeza llamado espiráculo. Los delfines son muy sociables y se comunican entre ellos mediante silbidos y sonidos específicos. Además, utilizan un sistema llamado 'ecolocalización' para encontrar comida y nadar sin chocar, lanzando sonidos que rebotan en los objetos como si fuera un radar.",
-            question: "¿A través de qué órgano respiran los delfines?",
-            options: ["A través de branquias.", "Usando su nariz bajo el agua.", "A través del espiráculo.", "Usando sus aletas."],
-            answer: 2
+            text: "Situación: Están discutiendo por un gasto de dinero innecesario. Felipe levanta un poco la voz porque se siente atacado.",
+            question: "¿Qué acción ayuda a bajar la tensión?",
+            options: [
+                "Gritar más fuerte que él para demostrar quién manda.",
+                "Decirle insultos hirientes sobre su trabajo o su familia.",
+                "Respirar hondo, bajar tu tono de voz y decir: 'No nos gritemos, hablemos tranquilos porque así no solucionamos nada'.",
+                "Irte de la casa dando un portazo."
+            ],
+            answer: 2 // Bajar el tono
         },
         {
-            text: "Las Abejas y su gran trabajo\n\nLas abejas son fundamentales para la vida en la Tierra. Mientras vuelan de flor en flor buscando néctar para fabricar miel, sus cuerpos se llenan de polen. Al viajar a otra flor, dejan caer ese polen, permitiendo que las plantas produzcan semillas y frutos. Este proceso se llama polinización. Sin las abejas, muchas de las frutas y verduras que comemos hoy, como las manzanas o las fresas, desaparecerían para siempre.",
-            question: "¿Cómo se llama el proceso en el que las abejas ayudan a las plantas a producir frutos?",
-            options: ["Fabricación de miel.", "Fotosíntesis.", "Polinización.", "Recolección."],
-            answer: 2
+            text: "Situación: Felipe está intentando contarte algo que le preocupa de su trabajo, pero justo en ese momento te llega un mensaje interesante al celular.",
+            question: "¿Qué debes hacer para que él se sienta valorado?",
+            options: [
+                "Seguir mirando el celular mientras asientes con la cabeza.",
+                "Dejar el celular boca abajo, mirarlo a los ojos y escuchar activamente lo que dice.",
+                "Decirle 'espera un momento, que esto es importante' y responder el mensaje.",
+                "Cambiarle el tema y hablar de los niños."
+            ],
+            answer: 1 // Escucha activa
         },
         {
-            text: "El Ciclo del Agua\n\nEl agua de nuestro planeta está en constante movimiento. El calor del sol evapora el agua de los mares y ríos, convirtiéndola en vapor que sube al cielo para formar las nubes. Cuando las nubes se enfrían, el agua cae en forma de lluvia o nieve. Este ciclo es vital porque distribuye el agua dulce por todo el mundo, permitiendo que los animales y las plantas puedan beber y crecer.",
-            question: "¿Qué sucede cuando el agua de las nubes se enfría?",
-            options: ["Se convierte en nubes más grandes.", "Cae en forma de lluvia o nieve.", "Desaparece por el calor.", "Se convierte en vapor de agua."],
-            answer: 1
+            text: "Situación: Sientes que la rutina los está consumiendo. Felipe no ha sido romántico últimamente y solo hablan de cuentas y problemas.",
+            question: "¿Cuál es la actitud constructiva?",
+            options: [
+                "Esperar sentada a que él adivine que estás triste y haga algo mágico.",
+                "Pensar que ya no te quiere y llorar a solas.",
+                "Tomar la iniciativa: Preparar algo sencillo que les guste o proponerle salir un rato a caminar solos.",
+                "Quejarte con su mamá de que su hijo es muy aburrido."
+            ],
+            answer: 2 // Tomar iniciativa
         },
         {
-            text: null,
-            question: "En la oración: 'La mariposa azul vuela alegremente sobre el jardín', ¿cuál es el sustantivo?",
-            options: ["Azul", "Vuela", "Mariposa", "Alegremente"],
-            answer: 2
+            text: "Situación: Te diste cuenta de que cometiste un error con una cuenta del banco y Felipe tenía razón en la discusión anterior.",
+            question: "¿Qué haces con tu orgullo?",
+            options: [
+                "No decir nada y esperar que se le olvide.",
+                "Admitir el error pero culparlo a él de haberte distraído.",
+                "Acercarte y decir: 'Amor, tenías razón. Me equivoqué, disculpa. ¿Cómo lo solucionamos?'.",
+                "Enojarte por otra cosa para desviar la atención."
+            ],
+            answer: 2 // Humildad
         },
         {
-            text: null,
-            question: "¿Cuál de las siguientes palabras es un sinónimo de 'Valiente'?",
-            options: ["Miedoso", "Osado", "Triste", "Rápido"],
-            answer: 1
+            text: "Situación: Felipe hizo la cena, pero dejó la cocina hecha un desastre con ollas sucias por todas partes.",
+            question: "¿Cómo reaccionas ante su esfuerzo?",
+            options: [
+                "Entras a la cocina y dices: '¡Qué desorden! Mejor no hubieras cocinado nada'.",
+                "Primero agradeces la cena: 'Gracias por cocinar, estaba rico'. Luego sugieres limpiar juntos o turnarse.",
+                "Limpias todo tú sola pero haciendo ruidos fuertes y suspirando con rabia.",
+                "Le sirves la comida fría en venganza."
+            ],
+            answer: 1 // Refuerzo positivo
         },
         {
-            text: null,
-            question: "Identifica la palabra que está escrita incorrectamente:",
-            options: ["Zapato", "Hervir", "Bivía", "Gente"],
-            answer: 2 // Bivía (es Vivía)
+            text: "Situación: Tienen una diferencia sobre cómo educar o regañar a uno de los hijos.",
+            question: "¿Dónde y cuándo se discute esto?",
+            options: [
+                "Delante del niño, para que vea quién tiene la razón.",
+                "Desautorizas a Felipe frente al niño diciendo 'No le hagas caso a tu papá'.",
+                "Esperas a estar a solas en el cuarto y dices: 'Creo que debemos ponernos de acuerdo en esto para no confundirlo'.",
+                "Le cuentas a los vecinos que Felipe no sabe criar hijos."
+            ],
+            answer: 2 // Frente unido
         },
         {
-            text: null,
-            question: "¿Qué tipo de palabra es 'Caminar'?",
-            options: ["Sustantivo", "Adjetivo", "Verbo", "Pronombre"],
-            answer: 2
+            text: "Situación: Felipe llega emocionado a contarte un logro pequeño, pero tú estás ocupada viendo tu novela o serie favorita.",
+            question: "¿Qué priorizas?",
+            options: [
+                "Pausas la TV inmediatamente y celebras con él.",
+                "Le dices 'Shhh, espera que se acabe esta parte'.",
+                "Le dices 'Ah, qué bien' sin mirarlo.",
+                "Le subes el volumen al televisor."
+            ],
+            answer: 0 // Prioridad a la pareja
         },
         {
-            text: null,
-            question: "En una biblioteca, los libros se ordenan alfabéticamente. ¿Qué palabra iría primero?",
-            options: ["Avión", "Abeja", "Árbol", "Arena"],
-            answer: 1 // Abeja va antes que Abeja? No. Ab, Ar, Av... Abeja es la primera.
+            text: "Situación: Han pasado varios días sin pelear y todo está tranquilo en casa.",
+            question: "¿Qué puedes hacer para mantener esa buena energía?",
+            options: [
+                "Nada, disfrutar el silencio.",
+                "Buscar algo malo del pasado para ver si él reacciona.",
+                "Decirle algo bonito de la nada, como 'Me gusta cuando estamos así de tranquilos' o darle un abrazo sorpresa.",
+                "Preguntarle si está ocultando algo porque está muy callado."
+            ],
+            answer: 2 // Cultivar el amor
         }
     ];
 
-    const matematicasQuestions = [
+    // ==========================================
+    // PREGUNTAS PARA FELIPE (PADRE)
+    // ==========================================
+    const felipeQuestions = [
         {
-            text: "La Pastelería de Doña Rosa\n\nDoña Rosa horneó 8 bandejas llenas de galletas de chocolate para la feria del colegio. Cada bandeja tiene exactamente 12 galletas. Antes de llevarlas a la feria, su nieto se comió 6 galletas porque olían muy bien. Doña Rosa necesita saber cuántas galletas le quedan para vender.",
-            question: "¿Cuántas galletas tiene Doña Rosa ahora para vender?",
-            options: ["96 galletas", "80 galletas", "90 galletas", "100 galletas"],
-            answer: 2 // (8 * 12) - 6 = 90
+            text: "Situación: Llegas a casa y Nedis está visiblemente estresada, los niños están corriendo y la casa está un poco desordenada. Tú vienes cansado.",
+            question: "¿Cuál es la reacción de un 'Super Esposo'?",
+            options: [
+                "Preguntar '¿Por qué no está la cena lista?' y sentarte a ver el celular.",
+                "Irte directo al baño y encerrarte 1 hora.",
+                "Entrar, darle un beso, preguntarle '¿En qué te ayudo primero?' y ocuparte de los niños un rato.",
+                "Decirle que ella debería organizarse mejor."
+            ],
+            answer: 2 // Empatía y acción
         },
         {
-            text: "El Gran Ahorro de Camilo\n\nCamilo quiere comprar una bicicleta que cuesta $250. Él ya tiene guardados $120 en su alcancía. Para completar el dinero, su papá le propuso darle $10 por cada semana que ayude a limpiar el jardín. Camilo quiere saber cuántas semanas tendrá que trabajar para alcanzar su meta.",
-            question: "¿Cuántas semanas debe trabajar Camilo para comprar su bicicleta?",
-            options: ["10 semanas", "15 semanas", "13 semanas", "20 semanas"],
-            answer: 2 // (250 - 120) / 10 = 13
+            text: "Situación: Nedis te está contando un problema que tuvo con una vecina. A ti te parece una tontería y sabes la solución rápida.",
+            question: "¿Qué necesita ella de ti en ese momento?",
+            options: [
+                "Que le digas 'Ya, no le des importancia, olvídalo'.",
+                "Que la escuches, valides sus sentimientos ('Entiendo que te de rabia') y solo des consejos si ella los pide.",
+                "Que te burles de la situación.",
+                "Que te pongas a ver el partido mientras ella habla."
+            ],
+            answer: 1 // Validación emocional
         },
         {
-            text: "La Biblioteca Escolar\n\nEn la biblioteca de la escuela llegaron 4 cajas grandes con libros nuevos. En cada caja hay 25 libros de cuentos y 15 libros de ciencias. La bibliotecaria quiere poner todos los libros en un estante nuevo que tiene 5 repisas, poniendo la misma cantidad de libros en cada una.",
-            question: "¿Cuántos libros pondrá la bibliotecaria en cada repisa?",
-            options: ["32 libros", "40 libros", "20 libros", "30 libros"],
-            answer: 0 // 4 * (25+15) = 160. 160 / 5 = 32
+            text: "Situación: Es el aniversario o una fecha especial. El dinero está escaso.",
+            question: "¿Qué haces?",
+            options: [
+                "Hacerte el loco y esperar que a ella se le olvide.",
+                "Decirle 'No hay plata' y no hacer nada.",
+                "Escribirle una carta bonita, cocinar algo especial en casa o tener un detalle que demuestre que recordaste la fecha.",
+                "Comprarle algo muy caro con la tarjeta de crédito aunque se endeuden."
+            ],
+            answer: 2 // El detalle cuenta
         },
         {
-            text: "El Viaje en Autobús\n\nUn autobús sale de la ciudad con 45 pasajeros. En la primera parada bajan 12 personas y suben 8. En la segunda parada bajan 15 personas y suben 10. Los niños que van en el autobús se preguntan cuántas personas llegarán finalmente al destino.",
-            question: "¿Con cuántos pasajeros termina el viaje el autobús?",
-            options: ["36 pasajeros", "40 pasajeros", "30 pasajeros", "28 pasajeros"],
-            answer: 0 // 45 - 12 + 8 - 15 + 10 = 36
+            text: "Situación: Nedis te pide que por favor no dejes la toalla mojada en la cama. Es la quinta vez que te lo dice.",
+            question: "¿Qué piensa ella cuando la dejas ahí otra vez?",
+            options: [
+                "Piensa que eres un hombre muy ocupado.",
+                "Piensa que no la respetas ni valoras su trabajo en la casa.",
+                "Piensa que es gracioso.",
+                "No piensa nada."
+            ],
+            answer: 1 // Consciencia del otro
         },
         {
-            text: "Construyendo un Huerto\n\nEl profesor de cuarto grado quiere hacer un huerto rectangular. El huerto medirá 8 metros de largo y 5 metros de ancho. Para que los animales no entren, deben rodear todo el borde con una cerca de alambre.",
-            question: "¿Cuántos metros de cerca necesitan comprar en total (perímetro)?",
-            options: ["13 metros", "40 metros", "26 metros", "30 metros"],
-            answer: 2 // (8*2) + (5*2) = 26
+            text: "Situación: Están discutiendo. Nedis empieza a llorar de la frustración.",
+            question: "¿Qué haces tú?",
+            options: [
+                "Le dices: 'Ya vas a empezar con el drama, qué pereza'.",
+                "Te vas de la casa.",
+                "Haces una pausa, te acercas (si ella lo permite) y bajas la guardia. El llanto es señal de que le duele, no de manipulación.",
+                "Le dices que se ve fea cuando llora."
+            ],
+            answer: 2 // Compasión
         },
         {
-            text: "La Colección de Canicas\n\nAndrés tiene una colección de 120 canicas. Decide repartirlas equitativamente entre sus 4 mejores amigos. Sin embargo, antes de dárselas, encuentra 8 canicas más en su mochila y decide quedárselas para él.",
-            question: "¿Cuántas canicas recibirá cada uno de sus 4 amigos?",
-            options: ["30 canicas", "32 canicas", "25 canicas", "40 canicas"],
-            answer: 0 // 120 / 4 = 30
+            text: "Situación: Nedis se cortó el cabello o se compró una blusa nueva y te pregunta: '¿Cómo me veo?'.",
+            question: "¿Cuál es la respuesta correcta?",
+            options: [
+                "Ni la miras y dices 'Bien'.",
+                "Dices '¿Cuánto te costó eso?'.",
+                "La miras detenidamente, sonríes y le dices algo específico: 'Te queda muy bien ese color' o 'Te ves hermosa'.",
+                "Dices 'Te veías mejor antes'."
+            ],
+            answer: 2 // Cumplidos sinceros
         },
         {
-            text: "Fiesta de Cumpleaños\n\nPara el cumpleaños de Sofía, compraron 5 paquetes de refrescos. Cada paquete tiene 6 botellas. Si en la fiesta hay 15 invitados y todos beben la misma cantidad de refresco hasta que se acaban las botellas...",
-            question: "¿Cuántas botellas de refresco se tomó cada invitado?",
-            options: ["1 botella", "3 botellas", "2 botellas", "5 botellas"],
-            answer: 2 // (5 * 6) / 15 = 2
+            text: "Situación: Vas a salir con tus amigos el fin de semana.",
+            question: "¿Cómo manejas la situación para evitar problemas?",
+            options: [
+                "Le avisas 10 minutos antes de salir: 'Me voy, chao'.",
+                "No le dices nada y apagas el celular.",
+                "Lo conversas con tiempo, le dices dónde estarás y te aseguras de que ella no se quede sola con todo el trabajo pesado de la casa.",
+                "Le mientes diciendo que tienes que trabajar."
+            ],
+            answer: 2 // Respeto y planificación
         },
         {
-            text: "El Entrenamiento de Atletismo\n\nMariana corre 400 metros cada día de lunes a viernes. Los sábados, como tiene más tiempo, corre el doble de lo que corre un día normal. Los domingos descansa.",
-            question: "¿Cuántos metros corre Mariana en total durante toda la semana?",
-            options: ["2000 metros", "2400 metros", "2800 metros", "3000 metros"],
-            answer: 2 // (400 * 5) + 800 = 2800
+            text: "Situación: Nedis hizo tu comida favorita, pero le quedó un poco salada.",
+            question: "¿Qué dices?",
+            options: [
+                " '¡Guácala! Esto es puro veneno'.",
+                " 'Gracias amor por el esfuerzo, me encanta que me cocines esto'. (Te la comes y otro día comentan suavemente el tema de la sal).",
+                " Te levantas de la mesa y te haces un sándwich.",
+                " Le dices que mejor cocine su mamá."
+            ],
+            answer: 1 // Agradecimiento
         },
         {
-            text: "Reparto de Pizza\n\nSe compraron 3 pizzas para una cena familiar. Cada pizza está cortada en 8 rebanadas iguales. Si al final de la noche sobraron solo 4 rebanadas...",
-            question: "¿Cuántas rebanadas se comieron en total?",
-            options: ["20 rebanadas", "24 rebanadas", "18 rebanadas", "22 rebanadas"],
-            answer: 0 // (3 * 8) - 4 = 20
+            text: "Situación: Sientes que Nedis te regaña mucho últimamente.",
+            question: "¿Cuál es la forma madura de solucionarlo?",
+            options: [
+                "Regañarla tú también para empatar.",
+                "Buscar un momento de calma y decirle: 'Amor, me siento mal cuando me hablas así, siento que soy un niño. ¿Podemos mejorar la forma de pedirnos cosas?'.",
+                "Ignorarla completamente hasta que se canse.",
+                "Gritarle delante de los niños."
+            ],
+            answer: 1 // Comunicación de sentimientos
         },
         {
-            text: "Ahorro para el Cine\n\nUna entrada al cine cuesta $45 y un combo de palomitas cuesta $30. Si Lucía lleva un billete de $100 para pagar su entrada y sus palomitas...",
-            question: "¿Cuánto dinero recibirá Lucía de cambio?",
-            options: ["$35", "$25", "$15", "$30"],
-            answer: 1 // 100 - (45 + 30) = 25
+            text: "Situación: Es domingo en la tarde, no hay planes.",
+            question: "¿Qué propuesta suma puntos a la relación?",
+            options: [
+                "Dormir toda la tarde mientras ella lava ropa.",
+                "Proponer ver una película juntos abrazados, o salir a caminar al parque en familia desconectados del celular.",
+                "Irte a casa de tu mamá solo.",
+                "Jugar videojuegos 4 horas seguidas."
+            ],
+            answer: 1 // Tiempo de calidad
         }
     ];
 
@@ -358,8 +524,9 @@
     let currentIdx = 0;
     let score = 0;
     let selectedIdx = null;
+    let currentUser = "";
 
-    function initQuiz(subject) {
+    function initQuiz(user) {
         document.getElementById('screen-welcome').classList.remove('active');
         document.getElementById('screen-quiz').classList.add('active');
         document.getElementById('status-area').style.display = 'flex';
@@ -367,15 +534,16 @@
         
         currentIdx = 0;
         score = 0;
+        currentUser = user;
 
-        if(subject === 'castellano') {
-            currentQuestions = [...castellanoQuestions];
-            document.getElementById('subject-label').innerText = "Castellano";
-            document.getElementById('subject-label').style.background = "#6c5ce7";
+        if(user === 'nedis') {
+            currentQuestions = [...nedisQuestions];
+            document.getElementById('subject-label').innerText = "Turno de Nedis";
+            document.getElementById('subject-label').style.background = "#d63031";
         } else {
-            currentQuestions = [...matematicasQuestions];
-            document.getElementById('subject-label').innerText = "Matemáticas";
-            document.getElementById('subject-label').style.background = "#00cec9";
+            currentQuestions = [...felipeQuestions];
+            document.getElementById('subject-label').innerText = "Turno de Felipe";
+            document.getElementById('subject-label').style.background = "#0984e3";
         }
         
         showQuestion();
@@ -385,11 +553,14 @@
         const q = currentQuestions[currentIdx];
         selectedIdx = null;
         document.getElementById('btn-next').disabled = true;
+        document.getElementById('btn-next').innerText = "Siguiente Situación ➔";
 
+        // Actualizar barra de progreso
         const progress = (currentIdx / currentQuestions.length) * 100;
         document.getElementById('progress-bar').style.width = progress + "%";
-        document.getElementById('counter-text').innerText = `${currentIdx + 1} / ${currentQuestions.length}`;
+        document.getElementById('counter-text').innerText = `Situación ${currentIdx + 1} de ${currentQuestions.length}`;
 
+        // Mostrar texto de lectura/situación
         const readingDiv = document.getElementById('reading-content');
         if(q.text) {
             readingDiv.style.display = "block";
@@ -406,7 +577,8 @@
         q.options.forEach((opt, i) => {
             const div = document.createElement('div');
             div.className = 'option-box';
-            div.innerHTML = `<span style="font-weight:bold; color:var(--primary); margin-right:10px;">${String.fromCharCode(65+i)})</span> ${opt}`;
+            // Letras A, B, C, D
+            div.innerHTML = `<span style="font-weight:bold; color:var(--primary); margin-right:15px; font-size: 1.2rem;">${String.fromCharCode(65+i)}</span> ${opt}`;
             div.onclick = () => {
                 const all = document.querySelectorAll('.option-box');
                 all.forEach(box => box.classList.remove('selected'));
@@ -419,6 +591,7 @@
     }
 
     function handleNext() {
+        // Verificar respuesta
         if(selectedIdx === currentQuestions[currentIdx].answer) {
             score++;
         }
@@ -435,22 +608,24 @@
         document.getElementById('screen-quiz').classList.remove('active');
         document.getElementById('screen-results').classList.add('active');
         document.getElementById('progress-bar').style.width = "100%";
+        document.getElementById('status-area').style.display = 'none';
+        document.getElementById('subject-label').style.display = 'none';
         
         const circle = document.getElementById('score-circle');
-        circle.innerText = `${score} / ${currentQuestions.length}`;
+        circle.innerText = `${score}/10`;
         
         const feedback = document.getElementById('result-feedback');
+        
+        // Mensajes personalizados
         if(score >= 9) {
-            feedback.innerHTML = "¡ERES UNA GENIO! 🏆<br>Has leído y resuelto todo perfectamente. ¡Sigue así, llegarás muy lejos!";
-        } else if (score >= 7) {
-            feedback.innerHTML = "¡Excelente trabajo! 🌟<br>Casi logras el puntaje perfecto. Lee con un poquito más de calma la próxima.";
-        } else if (score >= 5) {
-            feedback.innerHTML = "¡Buen esfuerzo! 👍<br>Has aprobado, pero puedes mejorar si sigues practicando tu lectura diaria.";
+            feedback.innerHTML = `¡INCREÍBLE! 🌟<br>Tienes una inteligencia emocional excelente. Si aplicas estas respuestas en la vida real, la convivencia en casa será maravillosa. ¡Sigue así, el amor se construye con estos detalles!`;
+        } else if (score >= 6) {
+            feedback.innerHTML = `¡Bien hecho! 👍<br>Entiendes la mayoría de las situaciones, pero hay algunos detalles donde el ego o el cansancio pueden ganar. Revisa en qué fallaste y trata de respirar antes de reaccionar la próxima vez.`;
         } else {
-            feedback.innerHTML = "¡No te rindas! 💪<br>A veces la lectura es difícil, pero si lo intentas de nuevo seguro que mejorarás.";
+            feedback.innerHTML = `Es un buen comienzo. 💪<br>Parece que a veces reaccionamos impulsivamente o nos cuesta ponernos en los zapatos del otro. Este resultado no es malo, es una oportunidad para hablar y mejorar juntos.`;
         }
     }
 </script>
 
 </body>
-</html> 
+</html>
